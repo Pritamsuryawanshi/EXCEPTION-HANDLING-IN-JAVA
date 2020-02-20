@@ -5,6 +5,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 public class MoodAnalyzerTest {
 
     // Test case to check if the function returns "HAPPY" when string contains "HAPPY"
@@ -84,5 +87,51 @@ public class MoodAnalyzerTest {
         } catch (MoodAnalysisException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void givenmoodAnalyzerObject_WhenProper_ShouldReturnProper() {
+        try {
+            String moodResult;
+            Constructor<?> constructor = Class.forName("com.mood.MoodAnalyzer").getConstructor(String.class);
+            Object myObject = null;
+            try {
+                myObject = constructor.newInstance("I am in HAPPY mood");
+                MoodAnalyser moodAnalyser = (MoodAnalyser) myObject;
+                try {
+                    moodResult = moodAnalyser.analyser();
+                    Assert.assertEquals("HAPPY", moodResult);
+                } catch (MoodAnalysisException e) {
+                    e.printStackTrace();
+                }
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenMoodAnalyzerClass_WhenProper_ShouldReturnObject() {
+        MoodAnalyser myVariable = MoodAnalyserFactory.createMoodAnalyser("I am in HAPPY mood");
+        try {
+            String mood = myVariable.analyser();
+            Assert.assertEquals("HAPPY", mood);
+        } catch (MoodAnalysisException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenTwoObjectsOfSameClass_WhenCheckedForEquality_ShouldReturnTrue() {
+        MoodAnalyser moodAnalyser = MoodAnalyserFactory.createMoodAnalyser();
+        Assert.assertEquals(new MoodAnalyser(),moodAnalyser);
     }
 }

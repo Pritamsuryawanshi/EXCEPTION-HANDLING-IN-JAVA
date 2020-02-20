@@ -9,10 +9,12 @@ public class MoodAnalyser {
 
     //Default Constructor
     public MoodAnalyser() {
+        this.mood="mood";
     }
 
     //Parameterized Constructor
     public MoodAnalyser(String mood) {
+
         this.mood = mood;
     }
 
@@ -35,4 +37,12 @@ public class MoodAnalyser {
             throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NULL_INPUT, "Enter a valid Mood");
         }
     }
+
+
+    public boolean equals(Object another) {
+        if(this.mood.equals(((MoodAnalyser) another).mood)) {
+            return true;
+        }
+        return false;
+        }
 }

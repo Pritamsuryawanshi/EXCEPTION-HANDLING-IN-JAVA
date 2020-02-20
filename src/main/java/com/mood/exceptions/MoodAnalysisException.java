@@ -1,4 +1,5 @@
 package com.mood.exceptions;
+
 //Creating enum to differentiate the moods
 public class MoodAnalysisException extends Exception {
     public enum ExceptionType {
