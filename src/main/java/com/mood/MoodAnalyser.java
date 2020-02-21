@@ -1,4 +1,4 @@
-//                                                         WELCOME TO JAVA EXCEPTION HANDLING EXERCISES
+//                                  WELCOME TO JAVA EXCEPTION HANDLING EXERCISES
 
 package com.mood;
 
@@ -37,7 +37,6 @@ public class MoodAnalyser {
             throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NULL_INPUT, "Enter a valid Mood");
         }
     }
-
 
     public boolean equals(Object another) {
         if (this.mood.equals(((MoodAnalyser) another).mood)) {

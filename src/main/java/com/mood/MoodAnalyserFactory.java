@@ -7,6 +7,19 @@ import java.lang.reflect.InvocationTargetException;
 
 public class MoodAnalyserFactory {
 
+    public static String invokeMethod(MoodAnalyser moodObj, String method) throws MoodAnalysisException {
+        try {
+            return (String) moodObj.getClass().getDeclaredMethod(method).invoke(moodObj);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static MoodAnalyser createMoodAnalyser(String mood) {
         Object myobject = null;
         try {

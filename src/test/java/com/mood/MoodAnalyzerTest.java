@@ -95,22 +95,20 @@ public class MoodAnalyzerTest {
             String moodResult;
             Constructor<?> constructor = Class.forName("com.mood.MoodAnalyzer").getConstructor(String.class);
             Object myObject = null;
-            try {
-                myObject = constructor.newInstance("I am in HAPPY mood");
-                MoodAnalyser moodAnalyser = (MoodAnalyser) myObject;
-                try {
-                    moodResult = moodAnalyser.analyser();
-                    Assert.assertEquals("HAPPY", moodResult);
-                } catch (MoodAnalysisException e) {
-                    e.printStackTrace();
-                }
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
+            myObject = constructor.newInstance("I am in HAPPY mood");
+            MoodAnalyser moodAnalyser = (MoodAnalyser) myObject;
+            moodResult = moodAnalyser.analyser();
+            Assert.assertEquals("HAPPY", moodResult);
+        } catch (MoodAnalysisException e) {
+            e.printStackTrace();
+
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -159,6 +157,18 @@ public class MoodAnalyzerTest {
             e.printStackTrace();
             Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.type);
         }
+    }
+
+    @Test
+    public void givenObject_WhenProper_shouldInvokeMethod() {
+        MoodAnalyser moodObj = MoodAnalyserFactory.createMoodAnalyser("I AM IN HAPPY MOOOD");
+        String mood = null;
+        try {
+            mood = MoodAnalyserFactory.invokeMethod(moodObj, "analyser");
+        } catch (MoodAnalysisException e) {
+            e.printStackTrace();
+        }
+        Assert.assertEquals("HAPPY", mood);
     }
 }
 
