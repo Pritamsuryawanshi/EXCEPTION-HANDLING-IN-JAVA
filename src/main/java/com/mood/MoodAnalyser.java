@@ -9,7 +9,7 @@ public class MoodAnalyser {
 
     //Default Constructor
     public MoodAnalyser() {
-        this.mood="mood";
+        this.mood = "mood";
     }
 
     //Parameterized Constructor
@@ -40,9 +40,9 @@ public class MoodAnalyser {
 
 
     public boolean equals(Object another) {
-        if(this.mood.equals(((MoodAnalyser) another).mood)) {
+        if (this.mood.equals(((MoodAnalyser) another).mood)) {
             return true;
         }
         return false;
-        }
+    }
 }

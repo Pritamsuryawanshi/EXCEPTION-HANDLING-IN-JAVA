@@ -1,5 +1,7 @@
 package com.mood;
 
+import com.mood.exceptions.MoodAnalysisException;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -43,5 +45,18 @@ public class MoodAnalyserFactory {
             e.printStackTrace();
         }
         return (MoodAnalyser) myobject;
+    }
+
+    public static Constructor getConstructor(String param, Class constructor) throws MoodAnalysisException {
+        try {
+            Class<?> aClass = Class.forName(param);
+            return aClass.getConstructor(constructor);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS, e.getMessage());
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.getMessage());
+        }
     }
 }

@@ -132,6 +132,18 @@ public class MoodAnalyzerTest {
     @Test
     public void givenTwoObjectsOfSameClass_WhenCheckedForEquality_ShouldReturnTrue() {
         MoodAnalyser moodAnalyser = MoodAnalyserFactory.createMoodAnalyser();
-        Assert.assertEquals(new MoodAnalyser(),moodAnalyser);
+        Assert.assertEquals(new MoodAnalyser(), moodAnalyser);
+    }
+
+    @Test
+    public void givenClassName_WhenProper_ShouldReturnAnException() {
+        try {
+            MoodAnalyserFactory.getConstructor("com.mood.MoodAnalyser1", String.class);
+        } catch (MoodAnalysisException e) {
+            e.printStackTrace();
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS, e.type);
+        }
     }
 }
+
+
