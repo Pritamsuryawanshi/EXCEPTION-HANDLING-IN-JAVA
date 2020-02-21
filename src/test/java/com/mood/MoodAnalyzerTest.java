@@ -118,8 +118,8 @@ public class MoodAnalyzerTest {
 
     @Test
     public void givenMoodAnalyzerClass_WhenProper_ShouldReturnObject() {
-        MoodAnalyser myVariable = MoodAnalyserFactory.createMoodAnalyser("I am in HAPPY mood");
         try {
+            MoodAnalyser myVariable = MoodAnalyserFactory.createMoodAnalyser("I am in HAPPY mood");
             String mood = myVariable.analyser();
             Assert.assertEquals("HAPPY", mood);
         } catch (MoodAnalysisException e) {
@@ -169,6 +169,17 @@ public class MoodAnalyzerTest {
             e.printStackTrace();
         }
         Assert.assertEquals("HAPPY", mood);
+    }
+
+    @Test
+    public void givenMethodName_WhenIncorrect_shouldThrowAnException() {
+        String mood = null;
+        try {
+            MoodAnalyser moodObj = MoodAnalyserFactory.createMoodAnalyser("I AM IN HAPPY MOOOD");
+            mood = MoodAnalyserFactory.invokeMethod(moodObj, "analyser1");
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.type);
+        }
     }
 }
 

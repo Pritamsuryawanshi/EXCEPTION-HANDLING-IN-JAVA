@@ -15,7 +15,8 @@ public class MoodAnalyserFactory {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.getMessage());
+
         }
         return null;
     }
@@ -65,10 +66,8 @@ public class MoodAnalyserFactory {
             Class<?> aClass = Class.forName(param);
             return aClass.getConstructor(constructor);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
             throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS, e.getMessage());
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
             throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.getMessage());
         }
     }
