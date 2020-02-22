@@ -1,8 +1,8 @@
 package com.mood;
 
 import com.mood.exceptions.MoodAnalysisException;
-
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 public class MoodAnalyserFactory {
@@ -16,7 +16,6 @@ public class MoodAnalyserFactory {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
             throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.getMessage());
-
         }
         return null;
     }
@@ -70,5 +69,24 @@ public class MoodAnalyserFactory {
         } catch (NoSuchMethodException e) {
             throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.getMessage());
         }
+    }
+
+    public static String invokeField(MoodAnalyser moodObj, String fieldValue, String happy) throws MoodAnalysisException {
+
+        try {
+            Field declaredField = moodObj.getClass().getDeclaredField(fieldValue);
+            declaredField.setAccessible(true);
+            declaredField.set(moodObj, happy);
+            return (String) moodObj.getClass().getDeclaredMethod("analyser").invoke(moodObj);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.INVOCATION_TARGET_EXCEPTION, e.getMessage());
+        } catch (NoSuchFieldException e) {
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_FIELD, e.getMessage());
+        }
+        return null;
     }
 }

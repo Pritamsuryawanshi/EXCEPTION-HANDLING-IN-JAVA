@@ -14,7 +14,6 @@ public class MoodAnalyser {
 
     //Parameterized Constructor
     public MoodAnalyser(String mood) {
-
         this.mood = mood;
     }
 
@@ -30,12 +29,14 @@ public class MoodAnalyser {
             }
             if (mood.contains("HAPPY")) {
                 return "HAPPY";
-            } else {
+            }
+            if (mood.contains("SAD")) {
                 return "SAD";
             }
         } catch (NullPointerException e) {
             throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NULL_INPUT, "Enter a valid Mood");
         }
+        return null;
     }
 
     public boolean equals(Object another) {

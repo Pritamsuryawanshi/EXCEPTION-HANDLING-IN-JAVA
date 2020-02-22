@@ -1,10 +1,9 @@
-package com.mood;
 
+package com.mood;
 import com.mood.exceptions.MoodAnalysisException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -13,106 +12,95 @@ public class MoodAnalyzerTest {
     // Test case to check if the function returns "HAPPY" when string contains "HAPPY"
     @Test
     public void givenInputByConstructor_WhenContainsHappy_ShouldReturnHappy() {
-        String moodResult = null;
         try {
             MoodAnalyser moodAnalyserObject = new MoodAnalyser("HAPPY");
-            moodResult = moodAnalyserObject.analyser();
+           String moodResult = moodAnalyserObject.analyser();
             Assert.assertEquals("HAPPY", moodResult);
         } catch (MoodAnalysisException e) {
             e.printStackTrace();
         }
     }
 
-    // Test case to check if the function returns "SAD" when string contains "SAD"
-    @Test
-    public void givenInputByConstructor_WhenContainsSad_ShouldReturnSad() {
-        String moodResult = null;
-        try {
-            MoodAnalyser moodAnalyserObject = new MoodAnalyser("SAD");
-            moodResult = moodAnalyserObject.analyser();
-            Assert.assertEquals("SAD", moodResult);
-        } catch (MoodAnalysisException e) {
-            e.printStackTrace();
-        }
-    }
+
 
 
     // Test case to check if the function creates a custom exception when string is null
     @Test
     public void givenInputByConstructor_WhenNull_ShouldCreateCustomException() {
-        String moodResult = null;
         try {
             MoodAnalyser moodAnalyserObject = new MoodAnalyser(null);
-            moodResult = moodAnalyserObject.analyser();
+            String moodResult = moodAnalyserObject.analyser();
         } catch (MoodAnalysisException e) {
             Assert.assertEquals("Enter a valid Mood", e.getMessage());
-            e.printStackTrace();
         }
     }
 
     // Test case to check if the custom exception matches with enum type when the string is null
     @Test
     public void givenInputByConstructor_WhenNull_ShouldCreateAnException() {
-        String moodResult;
+
         try {
             MoodAnalyser moodAnalyserObject = new MoodAnalyser(null);
-            moodResult = moodAnalyserObject.analyser();
+            String moodResult = moodAnalyserObject.analyser();
         } catch (MoodAnalysisException e) {
             Assert.assertEquals(MoodAnalysisException.ExceptionType.NULL_INPUT, e.type);
-            e.printStackTrace();
         }
     }
 
     // Test case to check if the custom exception matches with enum type when the string is empty
     @Test
     public void givenInputByConstructor_WhenEmpty_ShouldReturnExceptions() {
-        String moodResult = null;
         try {
             MoodAnalyser moodAnalyserObject = new MoodAnalyser("");
-            moodResult = moodAnalyserObject.analyser();
+            String moodResult = moodAnalyserObject.analyser();
         } catch (MoodAnalysisException e) {
             Assert.assertEquals(MoodAnalysisException.ExceptionType.EMPTY_INPUT, e.type);
-            e.printStackTrace();
+        }
+    }
+
+    // Test case to check if the function returns "SAD" when Constructor contains "SAD"
+    @Test
+    public void givenInputByConstructor_WhenContainsSad_ShouldReturnSad() {
+        try {
+            MoodAnalyser moodAnalyserObject = new MoodAnalyser("SAD");
+            String moodResult = moodAnalyserObject.analyser();
+            Assert.assertEquals("SAD", moodResult);
+
+        } catch (MoodAnalysisException e) {
         }
     }
 
     // Test case to check if the method creates a NullPointerException when the constructor is empty
     @Test
     public void givenNoInputByDefaultConstructor_WhenEmpty_ShouldReturnExceptions() {
-        String moodResult = null;
         try {
             MoodAnalyser moodAnalyserObject = new MoodAnalyser();
-            moodResult = moodAnalyserObject.analyser();
-            Assert.assertEquals("SAD", moodResult);
+            String moodResult = moodAnalyserObject.analyser();
         } catch (MoodAnalysisException e) {
-            e.printStackTrace();
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.EMPTY_INPUT,e.type);
         }
     }
 
     @Test
-    public void givenmoodAnalyzerObject_WhenProper_ShouldReturnProper() {
+    public void givenmoodAnalyzerObject_WhenProper_ShouldReturnHappy() {
         try {
             String moodResult;
             Constructor<?> constructor = Class.forName("com.mood.MoodAnalyzer").getConstructor(String.class);
-            Object myObject = null;
-            myObject = constructor.newInstance("I am in HAPPY mood");
+            Object myObject = constructor.newInstance("I am in HAPPY mood");
             MoodAnalyser moodAnalyser = (MoodAnalyser) myObject;
             moodResult = moodAnalyser.analyser();
             Assert.assertEquals("HAPPY", moodResult);
         } catch (MoodAnalysisException e) {
             e.printStackTrace();
-
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
-
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
@@ -144,7 +132,6 @@ public class MoodAnalyzerTest {
         try {
             MoodAnalyserFactory.getConstructor("com.mood.MoodAnalyser1", String.class);
         } catch (MoodAnalysisException e) {
-            e.printStackTrace();
             Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_CLASS, e.type);
         }
     }
@@ -154,7 +141,6 @@ public class MoodAnalyzerTest {
         try {
             MoodAnalyserFactory.getConstructor("com.mood.MoodAnalyser", Integer.class);
         } catch (MoodAnalysisException e) {
-            e.printStackTrace();
             Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.type);
         }
     }
@@ -173,12 +159,42 @@ public class MoodAnalyzerTest {
 
     @Test
     public void givenMethodName_WhenIncorrect_shouldThrowAnException() {
-        String mood = null;
         try {
             MoodAnalyser moodObj = MoodAnalyserFactory.createMoodAnalyser("I AM IN HAPPY MOOOD");
-            mood = MoodAnalyserFactory.invokeMethod(moodObj, "analyser1");
+             MoodAnalyserFactory.invokeMethod(moodObj, "analyser1");
         } catch (MoodAnalysisException e) {
             Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.type);
+        }
+    }
+
+    @Test
+    public void givenPrivateFieldName_WhenProper_SetTheFieldUsingReflection() {
+        MoodAnalyser moodObj = MoodAnalyserFactory.createMoodAnalyser("HAPPY");
+        String returnValue = null;
+        try {
+            returnValue = MoodAnalyserFactory.invokeField(moodObj, "mood", "HAPPY");
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals("HAPPY",returnValue);
+        }
+    }
+
+    @Test
+    public void givenPrivateFieldName_WhenImproper_ShouldThrowAnException() {
+        MoodAnalyser moodObj = MoodAnalyserFactory.createMoodAnalyser("HAPPY");
+        try {
+            String returnValue = MoodAnalyserFactory.invokeField(moodObj, "mood1", "HAPPY");
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_FIELD,e.type);
+        }
+    }
+
+    @Test
+    public void givenInputToAField_WhenNull_ShouldThrowAnException() {
+        MoodAnalyser moodObj = MoodAnalyserFactory.createMoodAnalyser("HAPPY");
+        try {
+            String returnValue = MoodAnalyserFactory.invokeField(moodObj, "mood", null);
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.INVOCATION_TARGET_EXCEPTION,e.type);
         }
     }
 }
